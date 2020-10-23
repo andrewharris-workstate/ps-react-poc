@@ -33,10 +33,7 @@ export const People = ({
 }: PeopleProps) => {
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
     // validate form
-    // TODO: Validate form
-
     // call submit callback prop
     onFormSubmit();
   };
