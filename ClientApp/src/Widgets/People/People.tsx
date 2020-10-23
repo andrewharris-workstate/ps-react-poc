@@ -9,6 +9,7 @@ import {
   Label,
   Row,
 } from "reactstrap";
+import { LoadingIndicator } from "../../components/LoadingIndicator/LoadingIndicator";
 import "./People.css";
 
 export interface PeopleFormData {
@@ -43,10 +44,13 @@ export const People = ({
   };
 
   return (
-    <Container>
+    <Container className="people">
+      <Row>
+        <Col className="pt-3 pb-3">People <LoadingIndicator loading={loading} /></Col>
+      </Row>
       <Row>
         <Col>
-          <Form disabled={loading} onSubmit={onSubmit} >
+          <Form disabled={loading} onSubmit={onSubmit}>
             <Row form>
               <Col md="6">
                 <FormGroup>
