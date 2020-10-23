@@ -30,6 +30,8 @@ namespace react_poc
             });
 
             services.AddCors(options => options.AddDefaultPolicy(builder => builder.AllowAnyOrigin()));
+
+            services.AddSingleton<MemCache>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
