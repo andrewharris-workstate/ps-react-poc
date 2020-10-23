@@ -24,7 +24,7 @@ namespace react_poc.Controllers
                 LastName = "Guilizzoni",
                 JobTitle = "Founder & CEO",
                 Age = 40,
-                NickName = ""
+                NickName = null
             },
             new GridRecord
             {
