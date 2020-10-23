@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { getData } from "../../helpers/fetch";
+import { getData, postData } from "../../helpers/fetch";
 import { FeesForm, FeesFormData, SelectOption } from "./Fees.Form";
 
 export const Fees = () => {
   const defaultFeesForm: FeesFormData = {
     name: "",
     amount: 0.0,
-    type: undefined,
-    trigger: undefined,
+    feeType: undefined,
+    triggerType: undefined,
   };
 
   const [feesFormData, setFeesFormData] = useState(defaultFeesForm);
@@ -23,10 +23,11 @@ export const Fees = () => {
     });
   };
 
-  const onFormSubmit = () => {
+  const onFormSubmit = async () => {
     // validate form
     try {
       setLoading(true);
+      await postData("Fees", feesFormData);
     } catch (e) {
       // handle error
     } finally {
