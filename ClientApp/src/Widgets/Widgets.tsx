@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import { Fees } from "./Fees";
 import { People, PeopleFormData } from "./People";
-import "./Widgets.css";
 import { DataGrid } from "./DataGrid";
+import "./Widgets.css";
 
 export const Widgets = () => {
   const defaultPeopleForm: PeopleFormData = {
@@ -41,6 +42,7 @@ export const Widgets = () => {
         onFormSubmit={onPeopleSubmit}
         onFormChange={onFormChange}
       ></People>
+      <Fees/>
       <DataGrid />
     </div>
   );
