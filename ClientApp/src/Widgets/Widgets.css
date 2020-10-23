@@ -1,4 +1,12 @@
 .widgets {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.widgets > .container {
+  flex: 0 1 49%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding-bottom: 15px;
 }
