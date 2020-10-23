@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace react_poc.Models
 {
-    public class Person
+    public class Employee
     {
         public string Name { get; set; }
         public string SSN { get; set; }
         public DateTime StartDate { get; set; }
-        bool IsFullTime { get; set; }
+        public bool IsFullTime { get; set; }
     }
 }

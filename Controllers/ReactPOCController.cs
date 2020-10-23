@@ -81,22 +81,22 @@ namespace react_poc.Controllers
             return DropDownOption.TriggerTypes;
         }
 
-        [HttpGet("Person")]
-        public Person GetPerson()
+        [HttpGet("Employee")]
+        public Employee GetEmployee()
         {
-            return cache.GetPerson();
+            return cache.GetEmployee();
+        }
+
+        [HttpPost("Employee")]
+        public void PostEmployee([FromBody] Employee employee)
+        {
+            cache.CacheEmployee(employee);
         }
 
         [HttpGet("Fee")]
         public Fee GetFee()
         {
             return cache.GetFee();
-        }
-
-        [HttpPost("Person")]
-        public void PostPerson([FromBody] Person person)
-        {
-            cache.CachePerson(person);
         }
 
         [HttpPost("Fee")]

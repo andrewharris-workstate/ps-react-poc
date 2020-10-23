@@ -15,13 +15,14 @@ namespace react_poc.Models
 
     public enum TriggerType
     {
-        OpenMerchant = 0,
-        CloseMerchant = 1,
-        AccountChange = 2,
-        RateReview = 3,
-        Chargeback = 4,
-        ACHReject = 5,
-        ACHRequest = 6
+        Invalid = 0,
+        OpenMerchant = 1,
+        CloseMerchant = 2,
+        AccountChange = 3,
+        RateReview = 4,
+        Chargeback = 5,
+        ACHReject = 6,
+        ACHRequest = 7
     }
 
     public class Fee
