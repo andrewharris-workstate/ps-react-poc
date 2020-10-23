@@ -1,8 +1,7 @@
 import React, { useEffect, useState, Dispatch, SetStateAction } from "react";
 
 import { getData } from "../../helpers/fetch";
-import { GridRecord, Sorting } from "../../models";
-import { SortHeader } from "../../models/SortHeader";
+import { GridRecord, Sorting, SortHeader } from "../../models";
 
 import "./DataGrid.css";
 
