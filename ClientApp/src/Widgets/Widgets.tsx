@@ -3,6 +3,7 @@ import { Fees } from "./Fees";
 import { People, PeopleFormData } from "./People";
 import { DataGrid } from "./DataGrid";
 import "./Widgets.css";
+import { postData } from "../helpers/fetch";
 
 export const Widgets = () => {
   const defaultPeopleForm: PeopleFormData = {
@@ -22,11 +23,12 @@ export const Widgets = () => {
     });
   };
 
-  const onPeopleSubmit = () => {
+  const onPeopleSubmit = async () => {
     setPeopleWidgetLoading(true);
 
     try {
       // Request to API submission endpoint
+      await postData("Employee", peopleFormData);
     } catch (e) {
       // Handle error
     } finally {

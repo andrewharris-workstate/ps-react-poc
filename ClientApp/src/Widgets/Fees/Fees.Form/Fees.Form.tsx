@@ -22,8 +22,8 @@ export interface SelectOption {
 export interface FeesFormData {
   name: string;
   amount: number;
-  type?: number;
-  trigger?: number;
+  feeType?: number;
+  triggerType?: number;
 }
 
 export interface FeesFormProps {
@@ -99,10 +99,10 @@ export const FeesForm = ({
                   <Label for="input-type">Type</Label>
                   <Input
                     type="select"
-                    name="type"
+                    name="feeType"
                     id="input-type"
-                    value={formData.type}
-                    onChange={(e) => onChange("type", e.target.value)}
+                    value={formData.feeType}
+                    onChange={(e) => onChange("feeType", e.target.value)}
                     disabled={loading}
                   >
                     <option>Select</option>
@@ -119,10 +119,10 @@ export const FeesForm = ({
                   <Label for="input-trigger">Trigger</Label>
                   <Input
                     type="select"
-                    name="trigger"
+                    name="triggerType"
                     id="input-trigger"
-                    value={formData.trigger}
-                    onChange={(e) => onChange("trigger", e.target.value)}
+                    value={formData.triggerType}
+                    onChange={(e) => onChange("triggerType", e.target.value)}
                     disabled={loading}
                   >
                     <option>Select</option>
