@@ -30,6 +30,16 @@ export const DataGrid = () => {
   );
 };
 
+function getIconClasses(sorting: Sorting, current: Sorting): string {
+  let classes = `fas fa-sort-${sorting.isDescending ? 'down' : 'up'}`;
+
+  if (Sorting.areEqual(sorting, current)) {
+    classes += ' active'
+  }
+
+  return classes;
+}
+
 function renderTable(data: GridRecord[], sorting: Sorting, setSorting: Dispatch<SetStateAction<Sorting>>) {
   const nameAsc = new Sorting(SortHeader.Name, false);
   const nameDesc = new Sorting(SortHeader.Name, true);
@@ -47,22 +57,22 @@ function renderTable(data: GridRecord[], sorting: Sorting, setSorting: Dispatch<
           <th>
             Name (job title)
             <span>
-              <i className="fas fa-sort-up" onClick={() => setSorting(nameAsc)}></i>
-              <i className="fas fa-sort-down" onClick={() => setSorting(nameDesc)}></i>
+              <i className={getIconClasses(nameAsc, sorting)} onClick={() => setSorting(nameAsc)}></i>
+              <i className={getIconClasses(nameDesc, sorting)} onClick={() => setSorting(nameDesc)}></i>
             </span>
           </th>
           <th>
             Age
             <span>
-              <i className="fas fa-sort-up" onClick={() => setSorting(ageAsc)}></i>
-              <i className="fas fa-sort-down" onClick={() => setSorting(ageDesc)}></i>
+              <i className={getIconClasses(ageAsc, sorting)} onClick={() => setSorting(ageAsc)}></i>
+              <i className={getIconClasses(ageDesc, sorting)} onClick={() => setSorting(ageDesc)}></i>
             </span>
           </th>
           <th>
             Nickname
             <span>
-              <i className="fas fa-sort-up" onClick={() => setSorting(nickAsc)}></i>
-              <i className="fas fa-sort-down" onClick={() => setSorting(nickDesc)}></i>
+              <i className={getIconClasses(nickAsc, sorting)} onClick={() => setSorting(nickAsc)}></i>
+              <i className={getIconClasses(nickDesc, sorting)} onClick={() => setSorting(nickDesc)}></i>
             </span>
           </th>
         </tr>
