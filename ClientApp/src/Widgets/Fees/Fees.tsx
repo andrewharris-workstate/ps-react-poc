@@ -13,14 +13,24 @@ export const Fees = () => {
   const [feesFormData, setFeesFormData] = useState(defaultFeesForm);
   const [typeOptions, setTypeOptions] = useState<SelectOption[]>([]);
   const [triggerOptions, setTriggerOptions] = useState<SelectOption[]>([]);
+  const [feeTypeIsInvalid, setFeeTypeIsInvalid] = useState(true);
+  const [triggerTypeIsInvalid, setTriggerTypeIsInvalid] = useState(true);
 
   const [loading, setLoading] = useState(false);
 
-  const onFormChange = (field: string, value: string) => {
+  const onFormChange = (field: string, value: any) => {
     setFeesFormData({
       ...feesFormData,
       [field]: value,
     });
+
+    if ("feeType" === field) {
+      setFeeTypeIsInvalid(isSelectInvalid(+value));
+    }
+
+    if ("triggerType" === field) {
+      setTriggerTypeIsInvalid(isSelectInvalid(+value));
+    }
   };
 
   const onFormSubmit = async () => {
@@ -69,6 +79,16 @@ export const Fees = () => {
       loading={loading}
       typeOptions={typeOptions}
       triggerOptions={triggerOptions}
+      feeTypeIsInvalid={feeTypeIsInvalid}
+      triggerTypeIsInvalid={triggerTypeIsInvalid}
     ></FeesForm>
   );
 };
+
+function isSelectInvalid(value?: number) {
+  if (undefined === value || isNaN(value)) {
+    return true;
+  }
+
+  return false;
+}

@@ -33,6 +33,8 @@ export interface FeesFormProps {
   onFormChange: (field: string, value: string) => unknown;
   typeOptions: SelectOption[];
   triggerOptions: SelectOption[];
+  feeTypeIsInvalid: boolean;
+  triggerTypeIsInvalid: boolean;
 }
 
 export const FeesForm = ({
@@ -42,6 +44,8 @@ export const FeesForm = ({
   onFormChange,
   typeOptions,
   triggerOptions,
+  feeTypeIsInvalid,
+  triggerTypeIsInvalid
 }: FeesFormProps) => {
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -82,7 +86,9 @@ export const FeesForm = ({
                   <InputGroup>
                     <InputGroupAddon addonType="prepend">$</InputGroupAddon>
                     <Input
-                      type="text"
+                      type="number"
+                      min="0"
+                      max="10"
                       name="amount"
                       id="input-amount"
                       value={formData.amount}
@@ -101,9 +107,10 @@ export const FeesForm = ({
                     type="select"
                     name="feeType"
                     id="input-type"
-                    value={formData.feeType}
+                    value={formData.feeType?.toString()}
                     onChange={(e) => onChange("feeType", +e.target.value)}
                     disabled={loading}
+                    invalid={feeTypeIsInvalid}
                   >
                     <option>Select</option>
                     {typeOptions.map((t, i) => (
@@ -121,9 +128,10 @@ export const FeesForm = ({
                     type="select"
                     name="triggerType"
                     id="input-trigger"
-                    value={formData.triggerType}
+                    value={formData.triggerType?.toString()}
                     onChange={(e) => onChange("triggerType", +e.target.value)}
                     disabled={loading}
+                    invalid={triggerTypeIsInvalid}
                   >
                     <option>Select</option>
                     {triggerOptions.map((t, i) => (
@@ -137,7 +145,7 @@ export const FeesForm = ({
             </Row>
             <Row>
               <Col className="text-right">
-                <Button type="submit" disabled={loading}>
+                <Button type="submit" disabled={loading || feeTypeIsInvalid || triggerTypeIsInvalid}>
                   Save
                 </Button>
               </Col>
