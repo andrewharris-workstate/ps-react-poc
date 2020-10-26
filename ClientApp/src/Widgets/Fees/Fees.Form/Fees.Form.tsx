@@ -107,7 +107,7 @@ export const FeesForm = ({
                     type="select"
                     name="feeType"
                     id="input-type"
-                    value={formData.feeType}
+                    value={formData.feeType?.toString()}
                     onChange={(e) => onChange("feeType", +e.target.value)}
                     disabled={loading}
                     invalid={feeTypeIsInvalid}
@@ -128,7 +128,7 @@ export const FeesForm = ({
                     type="select"
                     name="triggerType"
                     id="input-trigger"
-                    value={formData.triggerType}
+                    value={formData.triggerType?.toString()}
                     onChange={(e) => onChange("triggerType", +e.target.value)}
                     disabled={loading}
                     invalid={triggerTypeIsInvalid}
