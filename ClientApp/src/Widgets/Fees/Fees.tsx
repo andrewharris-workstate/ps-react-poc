@@ -27,7 +27,7 @@ export const Fees = () => {
     // validate form
     try {
       setLoading(true);
-      await postData("Fees", feesFormData);
+      await postData("Fee", feesFormData);
     } catch (e) {
       // handle error
     } finally {

@@ -1,5 +1,6 @@
 import React, { useEffect, useState, Dispatch, SetStateAction } from "react";
 
+import { LoadingIndicator } from "../../components/LoadingIndicator/LoadingIndicator";
 import { getData } from "../../helpers/fetch";
 import { GridRecord, Sorting, SortHeader } from "../../models";
 
@@ -7,22 +8,24 @@ import "./DataGrid.css";
 
 export const DataGrid = () => {
   const [data, setData] = useState([] as GridRecord[]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [sorting, setSorting] = useState({ header: SortHeader.Name, isDescending: false });
 
   useEffect(() => {
     setIsLoading(true);
-    getData("gridrecords")
-    .then(response => response.json())
-    .then(data => {
-      setData(data as GridRecord[]);
-      setIsLoading(false);
-    });
+    setTimeout(() => {
+      getData("gridrecords")
+      .then(response => response.json())
+      .then(data => {
+        setData(data as GridRecord[]);
+        setIsLoading(false);
+      });
+    }, 1000);
   }, []);
 
   return (
     <div className="poc-datagrid">
-      {isLoading ? <p>Loading data...</p> : renderTable(data, sorting, setSorting)}
+      {isLoading ? <LoadingIndicator loading={true} /> : renderTable(data, sorting, setSorting)}
     </div>
   );
 };

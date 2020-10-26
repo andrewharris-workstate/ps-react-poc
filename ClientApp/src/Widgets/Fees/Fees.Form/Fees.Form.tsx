@@ -48,7 +48,7 @@ export const FeesForm = ({
     onFormSubmit();
   };
 
-  const onChange = (field: string, value: string) => {
+  const onChange = (field: string, value: any) => {
     onFormChange(field, value);
   };
 
@@ -102,7 +102,7 @@ export const FeesForm = ({
                     name="feeType"
                     id="input-type"
                     value={formData.feeType}
-                    onChange={(e) => onChange("feeType", e.target.value)}
+                    onChange={(e) => onChange("feeType", +e.target.value)}
                     disabled={loading}
                   >
                     <option>Select</option>
@@ -122,7 +122,7 @@ export const FeesForm = ({
                     name="triggerType"
                     id="input-trigger"
                     value={formData.triggerType}
-                    onChange={(e) => onChange("triggerType", e.target.value)}
+                    onChange={(e) => onChange("triggerType", +e.target.value)}
                     disabled={loading}
                   >
                     <option>Select</option>
