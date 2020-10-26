@@ -48,23 +48,16 @@ export const Fees = () => {
     setTriggerOptions(options);
   };
 
-  const loadTypes = async () => {
+  useEffect(() => {
     setLoading(true);
     try {
-      await loadFeeTypes();
-      await loadTriggerTypes();
+      loadFeeTypes();
+      loadTriggerTypes();
     } catch (e) {
       // handle error
     } finally {
       setLoading(false);
     }
-  };
-
-  useEffect(() => {
-    (async () => {
-      await loadTypes();
-    })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

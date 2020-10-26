@@ -15,7 +15,7 @@ namespace react_poc.Controllers
     public class ReactPOCController : ControllerBase
     {
         #region Records
-        private static readonly GridRecord[] Records = new GridRecord[4]
+        private static readonly GridRecord[] Records = new GridRecord[]
         {
             new GridRecord
             {
@@ -52,7 +52,52 @@ namespace react_poc.Controllers
                 JobTitle = "Head Chef",
                 Age = 55,
                 NickName = "Val"
-            }
+            },
+            new GridRecord
+            {
+                Id = 4,
+                FirstName = "Pickup",
+                LastName = "Dropoff",
+                JobTitle = "Driver",
+                Age = 65,
+                NickName = "Drop"
+            },
+            new GridRecord
+            {
+                Id = 5,
+                FirstName = "Tom",
+                LastName = "Magliozzi",
+                JobTitle = "Mechanic",
+                Age = 61,
+                NickName = "Click"
+            },
+            new GridRecord
+            {
+                Id = 6,
+                FirstName = "Ray",
+                LastName = "Magliozzi",
+                JobTitle = "Mechanic",
+                Age = 70,
+                NickName = "Clack"
+            },
+            new GridRecord
+            {
+                Id = 7,
+                FirstName = "James",
+                LastName = "Hendrix",
+                JobTitle = "Guitarist",
+                Age = 27,
+                NickName = "Jimi"
+            },
+            new GridRecord
+            {
+                Id = 8,
+                FirstName = "John",
+                LastName = "Bonham",
+                JobTitle = "Drummer",
+                Age = 35,
+                NickName = "Bon Bon"
+            },
         };
         #endregion
 
