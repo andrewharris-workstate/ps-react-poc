@@ -11,6 +11,7 @@ import {
   Label,
   Row,
 } from "reactstrap";
+import { LoadingIndicator } from "../../../components/LoadingIndicator/LoadingIndicator";
 import "./Fees.Form.css";
 
 export interface SelectOption {
@@ -52,7 +53,12 @@ export const FeesForm = ({
   };
 
   return (
-    <Container>
+    <Container className="fees-form">
+      <Row>
+        <Col className="pt-3 pb-3">
+          Fees <LoadingIndicator loading={loading} />
+        </Col>
+      </Row>
       <Row>
         <Col>
           <Form disabled={loading} onSubmit={onSubmit}>
