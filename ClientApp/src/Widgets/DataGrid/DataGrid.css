@@ -18,6 +18,11 @@
 .poc-datagrid th  i {
   cursor: pointer;
   margin: 0 5px;
+  opacity: 0.3;
+}
+
+.poc-datagrid th i.active {
+  opacity: 1;
 }
 
 .poc-datagrid th i:last-child {

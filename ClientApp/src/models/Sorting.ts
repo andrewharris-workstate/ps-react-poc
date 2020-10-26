@@ -8,4 +8,8 @@ export class Sorting {
     this.header = header;
     this.isDescending = isDescending;
   }
+
+  public static areEqual(a: Sorting, b: Sorting) {
+    return a.header === b.header && a.isDescending === b.isDescending;
+  }
 }
