@@ -5,6 +5,12 @@ import { DataGrid } from "./DataGrid";
 import "./Widgets.css";
 import { postData } from "../helpers/fetch";
 
+export const postStatuses = {
+  'POST_SUCCESS' : 1,
+  'POST_FAILURE' : 2,
+  'DIRTY': 3
+}
+
 export const Widgets = () => {
   const defaultPeopleForm: PeopleFormData = {
     name: "",
@@ -15,25 +21,34 @@ export const Widgets = () => {
 
   const [peopleFormData, setPeopleFormData] = useState(defaultPeopleForm);
   const [peopleWidgetLoading, setPeopleWidgetLoading] = useState(false);
+  const [peoplePostStatus, setPeoplePostStatus] = useState(postStatuses['DIRTY']);
 
   const onFormChange = (field: string, value: string) => {
     setPeopleFormData({
       ...peopleFormData,
       [field]: value,
     });
+
+    setPeoplePostStatus(postStatuses['DIRTY']);
   };
 
   const onPeopleSubmit = async () => {
     setPeopleWidgetLoading(true);
-
-    try {
-      // Request to API submission endpoint
-      await postData("Employee", peopleFormData);
-    } catch (e) {
-      // Handle error
-    } finally {
-      setPeopleWidgetLoading(false);
-    }
+    // Request to API submission endpoint
+    await postData("Employee", peopleFormData)
+      .then(response => {
+        if (response.status === 200) {
+          setPeoplePostStatus(postStatuses['POST_SUCCESS']);
+        } else if (response.status === 400 && response.headers.get("content-type")?.indexOf("javascript")) {
+          setPeoplePostStatus(postStatuses['POST_FAILURE']);
+        }
+      })
+      .catch(() => {
+        console.log("Unhandled error");
+      })
+      .finally(() => {
+        setPeopleWidgetLoading(false);
+      });
   };
 
   return (
@@ -41,6 +56,7 @@ export const Widgets = () => {
       <People
         formData={peopleFormData}
         loading={peopleWidgetLoading}
+        postStatus={peoplePostStatus}
         onFormSubmit={onPeopleSubmit}
         onFormChange={onFormChange}
       ></People>

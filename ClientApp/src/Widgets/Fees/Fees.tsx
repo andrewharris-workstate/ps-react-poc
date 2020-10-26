@@ -2,6 +2,12 @@ import React, { useEffect, useState } from "react";
 import { getData, postData } from "../../helpers/fetch";
 import { FeesForm, FeesFormData, SelectOption } from "./Fees.Form";
 
+export const postStatuses = {
+  'POST_SUCCESS' : 1,
+  'POST_FAILURE' : 2,
+  'DIRTY': 3
+}
+
 export const Fees = () => {
   const defaultFeesForm: FeesFormData = {
     name: "",
@@ -16,6 +22,7 @@ export const Fees = () => {
   const [feeTypeIsInvalid, setFeeTypeIsInvalid] = useState(true);
   const [triggerTypeIsInvalid, setTriggerTypeIsInvalid] = useState(true);
 
+  const [feePostStatus, setFeePostStatus] = useState(postStatuses['DIRTY']);
   const [loading, setLoading] = useState(false);
 
   const onFormChange = (field: string, value: any) => {
@@ -31,18 +38,25 @@ export const Fees = () => {
     if ("triggerType" === field) {
       setTriggerTypeIsInvalid(isSelectInvalid(+value));
     }
+    setFeePostStatus(postStatuses['DIRTY']);
   };
 
   const onFormSubmit = async () => {
-    // validate form
-    try {
-      setLoading(true);
-      await postData("Fee", feesFormData);
-    } catch (e) {
-      // handle error
-    } finally {
-      setLoading(false);
-    }
+    setLoading(true);
+    await postData("Fee", feesFormData)
+      .then(response => {
+        if (response.status === 200) {
+          setFeePostStatus(postStatuses['POST_SUCCESS']);
+        } else if (response.status === 400 && response.headers.get("content-type")?.indexOf("javascript")) {
+          setFeePostStatus(postStatuses['POST_FAILURE']);
+        }
+      })
+      .catch(() => {
+        console.log("Unhandled error");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   const loadTriggerTypes = async () => {
@@ -81,6 +95,7 @@ export const Fees = () => {
       triggerOptions={triggerOptions}
       feeTypeIsInvalid={feeTypeIsInvalid}
       triggerTypeIsInvalid={triggerTypeIsInvalid}
+      postStatus={feePostStatus}
     ></FeesForm>
   );
 };
