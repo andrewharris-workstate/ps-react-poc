@@ -47,7 +47,7 @@ export const Fees = () => {
       .then(response => {
         if (response.status === 200) {
           setFeePostStatus(postStatuses['POST_SUCCESS']);
-        } else if (response.status === 400 && response.headers.get("content-type")?.indexOf("javascript")) {
+        } else if (response.status === 400) {
           setFeePostStatus(postStatuses['POST_FAILURE']);
         }
       })

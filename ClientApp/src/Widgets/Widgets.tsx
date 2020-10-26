@@ -39,7 +39,7 @@ export const Widgets = () => {
       .then(response => {
         if (response.status === 200) {
           setPeoplePostStatus(postStatuses['POST_SUCCESS']);
-        } else if (response.status === 400 && response.headers.get("content-type")?.indexOf("javascript")) {
+        } else if (response.status === 400) {
           setPeoplePostStatus(postStatuses['POST_FAILURE']);
         }
       })
