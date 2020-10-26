@@ -1,15 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   Col,
   Container,
   Form,
+  FormFeedback,
   FormGroup,
   Input,
   Label,
   Row,
 } from "reactstrap";
 import { LoadingIndicator } from "../../components/LoadingIndicator/LoadingIndicator";
+import { FormError } from "../../models";
+import { FormValidationRule } from "../../models";
 import "./People.css";
 
 export interface PeopleFormData {
@@ -32,21 +35,72 @@ export const People = ({
   onFormSubmit,
   onFormChange,
 }: PeopleProps) => {
+  const formValidation: FormValidationRule[] = [
+    {
+      field: "ssn",
+      regex: /^\d{3}-?\d{2}-?\d{4}$/,
+      required: true,
+    },
+    {
+      field: "name",
+      regex: /^(?=.{1,50}$)[a-z]+(?:['_.\s][a-z]+)*$/g,
+      required: true,
+    },
+    {
+      field: "startDate",
+      required: true,
+    },
+  ];
+
+  const [formErrors, setFormErrors] = useState<Record<string, FormError[]>>({});
+  const today = new Date().toISOString().substr(0, 10);
+
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // validate form
-    // call submit callback prop
+    if (formErrors) {
+      return;
+    }
     onFormSubmit();
+  };
+
+  const validateField = (field: string, value: string) => {
+    let errors: FormError[] = [];
+
+    const rule = formValidation.find((r) => r.field === field);
+    if (!rule) {
+      setFormErrors({ ...formErrors, [field]: errors });
+      return;
+    }
+
+    if (!value) {
+      if (rule.required) {
+        errors.push({ field, message: `${field} is required` });
+      }
+
+      setFormErrors({ ...formErrors, [field]: errors });
+      return;
+    }
+
+    if (rule.regex) {
+      if (!rule.regex.test(value)) {
+        errors.push({ field, message: `${field} is invalid` });
+      }
+    }
+
+    setFormErrors({ ...formErrors, [field]: errors });
   };
 
   const onChange = (field: string, value: string) => {
     onFormChange(field, value);
+    validateField(field, value);
   };
 
   return (
     <Container className="people">
       <Row>
-        <Col className="pt-3 pb-3">People <LoadingIndicator loading={loading} /></Col>
+        <Col className="pt-3 pb-3">
+          People <LoadingIndicator loading={loading} />
+        </Col>
       </Row>
       <Row>
         <Col>
@@ -62,7 +116,14 @@ export const People = ({
                     onChange={(e) => onChange("name", e.target.value)}
                     id="input-name"
                     disabled={loading}
+                    required
+                    invalid={formErrors["name"]?.length > 0}
                   />
+                  <FormFeedback>
+                    {formErrors["name"]?.map((x, i) => (
+                      <span key={`name-error-${i}`}>{x.message}</span>
+                    ))}
+                  </FormFeedback>
                 </FormGroup>
               </Col>
               <Col md="6">
@@ -75,7 +136,13 @@ export const People = ({
                     value={formData.ssn}
                     onChange={(e) => onChange("ssn", e.target.value)}
                     disabled={loading}
+                    invalid={formErrors["ssn"]?.length > 0}
                   />
+                  <FormFeedback>
+                    {formErrors["ssn"]?.map((x, i) => (
+                      <span key={`ssn-error-${i}`}>{x.message}</span>
+                    ))}
+                  </FormFeedback>
                 </FormGroup>
               </Col>
             </Row>
@@ -85,12 +152,20 @@ export const People = ({
                   <Label for="input-date">Start Date</Label>
                   <Input
                     type="date"
-                    name="date"
+                    name="startDate"
                     id="input-date"
                     value={formData.startDate}
                     onChange={(e) => onChange("startDate", e.target.value)}
                     disabled={loading}
+                    invalid={formErrors["startDate"]?.length > 0}
+                    min={today}
+                    required
                   />
+                  <FormFeedback>
+                    {formErrors["startDate"]?.map((x, i) => (
+                      <span key={`startDate-error-${i}`}>{x.message}</span>
+                    ))}
+                  </FormFeedback>
                 </FormGroup>
               </Col>
               <Col md="6">
@@ -109,8 +184,11 @@ export const People = ({
             </Row>
             <Row>
               <Col className="text-right">
-                <Button type="submit" disabled={loading}>
-                  Save
+                <Button
+                  type="submit"
+                  disabled={loading || Object.keys(formErrors).length > 0}
+                >
+                  Save {Object.keys(formErrors).length}
                 </Button>
               </Col>
             </Row>
