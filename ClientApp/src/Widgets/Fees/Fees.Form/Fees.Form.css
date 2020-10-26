@@ -13,3 +13,10 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+.post-success {
+  color: green;
+}
+
+.post-failure {
+  color: red;
+}

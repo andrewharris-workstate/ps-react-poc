@@ -1,3 +1,11 @@
 .people {
   color: #000000;
 }
+
+.post-success {
+  color: green;
+}
+
+.post-failure {
+  color: red;
+}

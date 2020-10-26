@@ -13,6 +13,7 @@ import {
 } from "reactstrap";
 import { LoadingIndicator } from "../../../components/LoadingIndicator/LoadingIndicator";
 import "./Fees.Form.css";
+import { postStatuses } from "../Fees"
 
 export interface SelectOption {
   id: string;
@@ -35,6 +36,7 @@ export interface FeesFormProps {
   triggerOptions: SelectOption[];
   feeTypeIsInvalid: boolean;
   triggerTypeIsInvalid: boolean;
+  postStatus: number;
 }
 
 export const FeesForm = ({
@@ -45,7 +47,8 @@ export const FeesForm = ({
   typeOptions,
   triggerOptions,
   feeTypeIsInvalid,
-  triggerTypeIsInvalid
+  triggerTypeIsInvalid,
+  postStatus
 }: FeesFormProps) => {
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,6 +58,9 @@ export const FeesForm = ({
   const onChange = (field: string, value: any) => {
     onFormChange(field, value);
   };
+
+  const renderSuccess = postStatus === postStatuses['POST_SUCCESS'];
+  const renderFailure = postStatus === postStatuses['POST_FAILURE'];
 
   return (
     <Container className="fees-form">
@@ -144,6 +150,10 @@ export const FeesForm = ({
               </Col>
             </Row>
             <Row>
+              <Col>
+                {renderSuccess && <span className="post-success">Post Succeeded!</span>}
+                {renderFailure && <span className="post-failure">Post Failed!</span>}
+              </Col>
               <Col className="text-right">
                 <Button type="submit" disabled={loading || feeTypeIsInvalid || triggerTypeIsInvalid}>
                   Save

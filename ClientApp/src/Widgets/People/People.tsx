@@ -1,4 +1,5 @@
 import React from "react";
+import { render } from "react-dom";
 import {
   Button,
   Col,
@@ -10,6 +11,7 @@ import {
   Row,
 } from "reactstrap";
 import { LoadingIndicator } from "../../components/LoadingIndicator/LoadingIndicator";
+import { postStatuses } from "../Widgets"
 import "./People.css";
 
 export interface PeopleFormData {
@@ -22,6 +24,7 @@ export interface PeopleFormData {
 export interface PeopleProps {
   formData: PeopleFormData;
   loading: boolean;
+  postStatus: number,
   onFormSubmit: () => unknown;
   onFormChange: (field: string, value: string) => unknown;
 }
@@ -29,6 +32,7 @@ export interface PeopleProps {
 export const People = ({
   formData,
   loading,
+  postStatus,
   onFormSubmit,
   onFormChange,
 }: PeopleProps) => {
@@ -45,6 +49,8 @@ export const People = ({
     onFormChange(field, value);
   };
 
+  const renderSuccess = postStatus === postStatuses['POST_SUCCESS'];
+  const renderFailure = postStatus === postStatuses['POST_FAILURE'];
   return (
     <Container className="people">
       <Row>
@@ -114,6 +120,10 @@ export const People = ({
               </Col>
             </Row>
             <Row>
+              <Col>
+                {renderSuccess && <span className="post-success">Post Succeeded!</span>}
+                {renderFailure && <span className="post-failure">Post Failed!</span>}
+              </Col>
               <Col className="text-right">
                 <Button type="submit" disabled={loading}>
                   Save
