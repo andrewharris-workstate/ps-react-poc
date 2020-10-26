@@ -32,6 +32,8 @@ export const People = ({
   onFormSubmit,
   onFormChange,
 }: PeopleProps) => {
+  const today = new Date().toISOString().substr(0, 10);
+
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // validate form
@@ -62,6 +64,7 @@ export const People = ({
                     onChange={(e) => onChange("name", e.target.value)}
                     id="input-name"
                     disabled={loading}
+                    required
                   />
                 </FormGroup>
               </Col>
@@ -75,6 +78,7 @@ export const People = ({
                     value={formData.ssn}
                     onChange={(e) => onChange("ssn", e.target.value)}
                     disabled={loading}
+                    required
                   />
                 </FormGroup>
               </Col>
@@ -90,6 +94,8 @@ export const People = ({
                     value={formData.startDate}
                     onChange={(e) => onChange("startDate", e.target.value)}
                     disabled={loading}
+                    min={today}
+                    required
                   />
                 </FormGroup>
               </Col>
